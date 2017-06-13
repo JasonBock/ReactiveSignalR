@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using ReactiveSignalR.Messages;
 using System.Net.Http;
 using System.Text;
+using Microsoft.AspNet.SignalR.Client;
+using ReactiveSignalR.Client.Extensions;
 
 namespace ReactiveSignalR.Client
 {
@@ -17,6 +19,7 @@ namespace ReactiveSignalR.Client
 		private const ushort BufferSize = 20;
 		private const string Termination = "STOP IT";
 		private const string ApiUrl = "http://localhost:2112/api/keys";
+		private const string SignalRUrl = "http://localhost:2112/signalr";
 
 		private static Queue<char> buffer = new Queue<char>();
 
@@ -104,35 +107,58 @@ namespace ReactiveSignalR.Client
 
 		private static void PublishKeys()
 		{
-			Console.Out.WriteLine("Begin...");
-			var userName = Program.GetUserName();
+			Console.Out.WriteLine("Getting SignalR Connection...");
 
-			using (var keyLogger = new EventedNativeKeyWatcher())
-			{
-				var observable = Observable.FromEventPattern<K.KeyEventArgs>(
-					keyLogger, nameof(EventedNativeKeyWatcher.KeyLogged))
-					.Select(e => e.EventArgs.Key)
-					.Buffer(20, 14);
+			var connection = new HubConnection(Program.SignalRUrl);
+			var proxy = connection.CreateHubProxy("KeyWatcherHub");
+			connection.Start().GetAwaiter().GetResult();
 
-				using (var subscription = observable.Subscribe(
-					pattern =>
-					{
-						var keys = pattern.ToArray();
-						var message = JsonConvert.SerializeObject(
-							new UserKeysMessage(userName, keys), Formatting.Indented);
-						var content = new StringContent(message,
-							Encoding.Unicode, "application/json");
-						var postResponse = new HttpClient().PostAsync(
-							Program.ApiUrl, content);
-						postResponse.Wait();
-
-						foreach (var key in keys)
-						{
-							Program.CheckForTermination(key);
-						}
-					}))
+			proxy.On<NotificationSentMessage>(
+				"NotificationSent", message =>
 				{
-					Application.Run();
+					Console.Out.WriteLine($"On() - {message.User} - {message.BadWords}");
+				});
+
+			using (proxy
+				.ObserveAs<NotificationSentMessage>("NotificationSent")
+				.Where(message => message.BadWords.Contains("cotton"))
+				.Take(3)
+				.Delay(TimeSpan.FromSeconds(2))
+				.Subscribe(message =>
+				{
+					Console.Out.WriteLine($"Subscribe() - {message.User} - {message.BadWords}");
+				}))
+			{
+				Console.Out.WriteLine("Begin...");
+				var userName = Program.GetUserName();
+
+				using (var keyLogger = new EventedNativeKeyWatcher())
+				{
+					var observable = Observable.FromEventPattern<K.KeyEventArgs>(
+						keyLogger, nameof(EventedNativeKeyWatcher.KeyLogged))
+						.Select(e => e.EventArgs.Key)
+						.Buffer(20, 14);
+
+					using (var subscription = observable.Subscribe(
+						pattern =>
+						{
+							var keys = pattern.ToArray();
+							var message = JsonConvert.SerializeObject(
+								new UserKeysMessage(userName, keys), Formatting.Indented);
+							var content = new StringContent(message,
+								Encoding.Unicode, "application/json");
+							var postResponse = new HttpClient().PostAsync(
+								Program.ApiUrl, content);
+							postResponse.Wait();
+
+							foreach (var key in keys)
+							{
+								Program.CheckForTermination(key);
+							}
+						}))
+					{
+						Application.Run();
+					}
 				}
 			}
 		}

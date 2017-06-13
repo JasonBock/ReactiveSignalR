@@ -10,8 +10,12 @@
     <PackageReference Include="Autofac.WebApi2.Owin" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR.SelfHost" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.3" />
+    <PackageReference Include="Microsoft.Owin.Cors" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReactiveSignalR.Messages\ReactiveSignalR.Messages.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 </Project>

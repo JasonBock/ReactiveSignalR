@@ -21,14 +21,15 @@ namespace ReactiveSignalR.Service
 			);
 
 			var builder = new ContainerBuilder();
-			builder.RegisterHubs(Assembly.GetExecutingAssembly());
+			builder.RegisterHubs(Assembly.GetExecutingAssembly()).SingleInstance();
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 			var container = builder.Build();
 
 			config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 			signalRConfig.Resolver = new AutofacDependencyResolver(container);
 
-			//app.UseAutofacWebApi(config);
+			app.UseAutofacMiddleware(container);
+			app.UseAutofacWebApi(config);
 			app.UseWebApi(config);
 			app.MapSignalR(signalRConfig);
 		}

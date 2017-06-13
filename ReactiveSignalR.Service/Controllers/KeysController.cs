@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.SignalR;
-using ReactiveSignalR.Messages;
+﻿using ReactiveSignalR.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +33,7 @@ namespace ReactiveSignalR.Service.Controllers
 			if (foundBadWords.Count > 0)
 			{
 				var badWords = string.Join(", ", foundBadWords);
-
+				Console.Out.WriteLine("HEY!");
 				this.hub.Clients.All.NotificationSent(
 					new NotificationSentMessage(value.Name, badWords));
 			}

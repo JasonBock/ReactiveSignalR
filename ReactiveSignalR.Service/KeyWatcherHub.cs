@@ -3,6 +3,6 @@
 namespace ReactiveSignalR.Service
 {
 	public sealed class KeyWatcherHub
-		: Hub<IKeyWatcherHub>
+		: Hub
 	{ }
 }
