@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveSignalR.Client", "ReactiveSignalR.Client\ReactiveSignalR.Client.csproj", "{C07B78A7-5510-484D-B906-B5B96B0872C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveSignalR.Service", "ReactiveSignalR.Service\ReactiveSignalR.Service.csproj", "{6435C4A0-032A-4E4B-A7D1-40650C476542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveSignalR.Messages", "ReactiveSignalR.Messages\ReactiveSignalR.Messages.csproj", "{4F81A727-B1A9-4902-9B99-B851EDE2D7B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C07B78A7-5510-484D-B906-B5B96B0872C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C07B78A7-5510-484D-B906-B5B96B0872C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C07B78A7-5510-484D-B906-B5B96B0872C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6435C4A0-032A-4E4B-A7D1-40650C476542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6435C4A0-032A-4E4B-A7D1-40650C476542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6435C4A0-032A-4E4B-A7D1-40650C476542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6435C4A0-032A-4E4B-A7D1-40650C476542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F81A727-B1A9-4902-9B99-B851EDE2D7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F81A727-B1A9-4902-9B99-B851EDE2D7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F81A727-B1A9-4902-9B99-B851EDE2D7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F81A727-B1A9-4902-9B99-B851EDE2D7B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.0" />
+    <PackageReference Include="Autofac.Owin" Version="4.0.0" />
+    <PackageReference Include="Autofac.SignalR2" Version="4.0.0" />
+    <PackageReference Include="Autofac.WebApi2.Owin" Version="4.0.0" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.SelfHost" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReactiveSignalR.Messages\ReactiveSignalR.Messages.csproj" />
+  </ItemGroup>
+</Project>
