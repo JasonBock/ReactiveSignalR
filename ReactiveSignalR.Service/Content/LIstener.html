@@ -16,6 +16,7 @@
 </head>
 <body>
     <div class="container">
+        <div id="status" />
         <ul id="updates"></ul>
     </div>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
@@ -31,7 +32,8 @@
                 $('#updates').append('<li><strong>' + user + '</strong>:&nbsp;&nbsp;' + badWords + '</li>');
             });
             connection.start().done(function () {
-                alert("Connection made.");
+                $('#updates').append('Connection made');
+                //alert("Connection made.");
             });
         });
     </script>
