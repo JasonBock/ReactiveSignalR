@@ -2,6 +2,8 @@
 using Autofac.Integration.SignalR;
 using Autofac.Integration.WebApi;
 using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Owin;
 using System.Reflection;
 using System.Web.Http;
@@ -30,6 +32,16 @@ namespace ReactiveSignalR.Service
 
 			app.UseWebApi(httpConfig);
 			app.MapSignalR(signalRConfig);
+
+
+			var options = new FileServerOptions
+			{
+				EnableDirectoryBrowsing = false,
+				EnableDefaultFiles = false,
+				FileSystem = new PhysicalFileSystem("Content")
+			};
+
+			app.UseFileServer(true);
 		}
 	}
 }

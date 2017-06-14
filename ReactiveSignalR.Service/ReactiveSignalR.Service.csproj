@@ -10,6 +10,7 @@
     <PackageReference Include="Autofac.WebApi2.Owin" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR.SelfHost" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost" Version="5.2.3" />
+    <PackageReference Include="Microsoft.Owin.StaticFiles" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReactiveSignalR.Contracts\ReactiveSignalR.Contracts.csproj" />
@@ -17,5 +18,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\Listener.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
