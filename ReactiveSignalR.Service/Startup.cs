@@ -13,8 +13,8 @@ namespace ReactiveSignalR.Service
 		public void Configuration(IAppBuilder app)
 		{
 			var signalRConfig = new HubConfiguration();
-			var config = new HttpConfiguration();
-			config.Routes.MapHttpRoute(
+			var httpConfig = new HttpConfiguration();
+			httpConfig.Routes.MapHttpRoute(
 				 name: "DefaultApi",
 				 routeTemplate: "api/{controller}/{id}",
 				 defaults: new { id = RouteParameter.Optional }
@@ -25,12 +25,10 @@ namespace ReactiveSignalR.Service
 			builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 			var container = builder.Build();
 
-			config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			httpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 			signalRConfig.Resolver = new AutofacDependencyResolver(container);
 
-			app.UseAutofacMiddleware(container);
-			app.UseAutofacWebApi(config);
-			app.UseWebApi(config);
+			app.UseWebApi(httpConfig);
 			app.MapSignalR(signalRConfig);
 		}
 	}

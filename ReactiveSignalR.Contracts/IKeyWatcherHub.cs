@@ -1,6 +1,6 @@
 ﻿using ReactiveSignalR.Messages;
 
-namespace ReactiveSignalR.Service
+namespace ReactiveSignalR.Contracts
 {
 	public interface IKeyWatcherHub
 	{

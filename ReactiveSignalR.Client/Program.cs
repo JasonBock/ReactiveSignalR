@@ -1,22 +1,23 @@
 ﻿using KeyWatching;
+using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
+using ReactiveSignalR.Client.Extensions;
+using ReactiveSignalR.Messages;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Reactive.Linq;
+using System.Text;
 using System.Windows.Forms;
 using K = KeyWatching;
-using Newtonsoft.Json;
-using ReactiveSignalR.Messages;
-using System.Net.Http;
-using System.Text;
-using Microsoft.AspNet.SignalR.Client;
-using ReactiveSignalR.Client.Extensions;
 
 namespace ReactiveSignalR.Client
 {
 	class Program
 	{
-		private const ushort BufferSize = 20;
+		private const ushort BufferCount = 20;
+		private const ushort BufferSkip = 16;
 		private const string Termination = "STOP IT";
 		private const string ApiUrl = "http://localhost:2112/api/keys";
 		private const string SignalRUrl = "http://localhost:2112/signalr";
@@ -30,7 +31,7 @@ namespace ReactiveSignalR.Client
 			//Program.HandleKeysViaManualObservable();
 			//Program.HandleKeysFromEventPattern();
 			//Program.HandleKeysFromEventPatternWithOperators();
-			Program.PublishKeys();
+			Program.PublishKeysAndListen();
 		}
 #pragma warning restore IDE0022 // Use expression body for methods
 
@@ -84,11 +85,11 @@ namespace ReactiveSignalR.Client
 					keyLogger, nameof(EventedNativeKeyWatcher.KeyLogged));
 				var operationObservable = observable
 					.Select(e => e.EventArgs.Key)
-					.Buffer(20, 14)
+					.Buffer(Program.BufferCount, Program.BufferSkip)
 					.Delay(TimeSpan.FromSeconds(2));
 
 				using (var subscription = observable.Subscribe(
-					pattern => 
+					pattern =>
 					{
 						Program.CheckForTermination(pattern.EventArgs.Key);
 					}))
@@ -105,7 +106,7 @@ namespace ReactiveSignalR.Client
 			}
 		}
 
-		private static void PublishKeys()
+		private static void PublishKeysAndListen()
 		{
 			Console.Out.WriteLine("Getting SignalR Connection...");
 
@@ -137,7 +138,7 @@ namespace ReactiveSignalR.Client
 					var observable = Observable.FromEventPattern<K.KeyEventArgs>(
 						keyLogger, nameof(EventedNativeKeyWatcher.KeyLogged))
 						.Select(e => e.EventArgs.Key)
-						.Buffer(20, 14);
+						.Buffer(Program.BufferCount, Program.BufferSkip);
 
 					using (var subscription = observable.Subscribe(
 						pattern =>

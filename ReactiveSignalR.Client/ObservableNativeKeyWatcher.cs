@@ -5,6 +5,8 @@ using System.Reactive.Disposables;
 
 namespace ReactiveSignalR.Client
 {
+	// NOTE: You really shouldn't do this:
+	// https://stackoverflow.com/questions/10480542/why-shouldnt-i-implement-iobservablet
 	internal sealed class ObservableNativeKeyWatcher
 		: NativeKeyWatcher, IObservable<char>
 	{

@@ -32,10 +32,8 @@ namespace ReactiveSignalR.Service.Controllers
 
 			if (foundBadWords.Count > 0)
 			{
-				var badWords = string.Join(", ", foundBadWords);
-				Console.Out.WriteLine("HEY!");
 				this.hub.Clients.All.NotificationSent(
-					new NotificationSentMessage(value.Name, badWords));
+					new NotificationSentMessage(value.Name, string.Join(", ", foundBadWords)));
 			}
 		}
 	}
