@@ -6,7 +6,7 @@
   <ItemGroup>
     <PackageReference Include="KeyWatching" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.2.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup>
